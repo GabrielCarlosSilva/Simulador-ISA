@@ -9,17 +9,20 @@ typedef struct{
 
 int ACC = 0;                // Memoria acessivel
 int linha_atual = 0;        // Posição atual do código
-int max_linhas = 17;         // Tamanho máximo do arquivo
+int max_linhas = 0;         // Tamanho máximo do arquivo
+
 
 //// Funções administrativas
-int SET(regs* R, int reg, int info){
+//  Salva a informação recibida em um registrador cuja posição foi recebida (SET)
+int ST(regs* R, int reg, int info){
     if(reg > 15 || reg <= 1)
         return 0;
     R[reg].info = info;
     return 1;
 }
 
-int SIN(regs* R, int reg){
+//  Salva a informação armazenada em ACC para o registrador da posição recebida (SET IN)
+int SN(regs* R, int reg){
     if(reg > 15 || reg <= 1)
         return 0;
     R[reg].info = ACC;
@@ -27,7 +30,8 @@ int SIN(regs* R, int reg){
     return 1;  
 }
 
-int HOP(FILE* entry, int line){
+//  Pula para a linha recebida (HOP)
+int HP(FILE* entry, int line){
     if(line > max_linhas || line < 0)
         return 0;
     char trash[99];
@@ -39,7 +43,8 @@ int HOP(FILE* entry, int line){
     return 1;
 }
 
-int MEM(regs* R, FILE* exit, int reg){
+//  Guarda a informação do registrador na memoria (MEMORY)
+int MM(regs* R, FILE* exit, int reg){
     if(reg > 15 || reg <= 1)
         return 0;
     fprintf(exit, "%d \n", R[reg].info);
@@ -47,115 +52,165 @@ int MEM(regs* R, FILE* exit, int reg){
 }
 
 //// Funções matemáticas
-void SUM(regs* R, int r1, int r2){
+// Soma simples, resultado em ACC (r1 + r2)
+void SM(regs* R, int r1, int r2){
     ACC = R[r1].info + R[r2].info;
 }
 
-void SUB(regs* R, int r1, int r2){
+//  Subtração simples, resultado em ACC (r1 - r2)
+void SB(regs* R, int r1, int r2){
     ACC = R[r1].info - R[r2].info;
 }
 
-void MOD(regs* R, int r1, int r2){
+//  Modulo simples, resultado em ACC (r1 % r2)
+void MD(regs* R, int r1, int r2){
     ACC = R[r1].info % R[r2].info;
 }
 
+//  Função auxiliar de FR
 int fact(int n){
     if(n == 1)
         return 1;
     return n * fact(n - 1);
 }
 
-void FRC(regs* R, int rx){
+//  Função que realiza a fatoração, resultado em ACC (r1!)
+void FR(regs* R, int rx){
     ACC = fact(R[rx].info);
 }
 
-void EXP(regs* R, int r1, int r2){
+//  Exponeciação simples, resultado em ACC (r²)
+void EX(regs* R, int r1, int r2){
     ACC = pow(R[r1].info, R[r2].info);
 }
 
 ////  Funções lógicas
-void IEQ(FILE* entry, regs* R, int r1, int r2, int line){
+//  Verifica igualdade, caso positivo, pule para linha recebida (r1 == r2 ? line)
+void IE(FILE* entry, regs* R, int r1, int r2, int line){
     if(R[r1].info == R[r2].info)
-        HOP(entry, line);
+        HP(entry, line);
 }
 
-void ILT(FILE* entry, regs* R, int r1, int r2, int line){
+//  Verifica se r1 é menor que r2, caso positivo, pule para linha recebida (r1 < r2 ? line)
+void IL(FILE* entry, regs* R, int r1, int r2, int line){
     if(R[r1].info < R[r2].info)
-        HOP(entry, line);
+        HP(entry, line);
 }
 
-void limpeza(char s[4]){
+
+//// Funções de emulação
+// Limpa a string de comando
+void limpeza(char s[3]){
     for (int i = 0; i < 4; i++){
         s[i] = ' ';
     }
     
 }
 
+// Calcula o número total de linhas no arquivo recebido
+int tamanhoArquivo(FILE* arq){
+    char linha[99];
+    int linhas = 0;
+    while (fgets(linha, 99, arq) != NULL){
+        linhas++;
+    }
+    fclose(arq);
+    return linhas + 1;
+}
 
+// Converte binário para inteiro
+int binToInt(char *bin){
+    int saida = 0;
+    int potencia = 1;
+    for (int i = 7; i >= 0; i--){
+        if(bin[i] == '1')
+            saida += potencia;
+        potencia *= 2;
+    }
+    return saida;
+}
+
+// Converte charactere para binário
+int charToBin(FILE* entry){
+    char bin1[8], bin2[8];
+    fscanf(entry, "%s", bin1);
+    for(int i = 0; i < 8; i++)
+        bin2[i] = '0';
+    for (int i = 0; i < (int) strlen(bin1); i++)
+        bin2[7 - i] = bin1[strlen(bin1) - i - 1];
+    return binToInt(bin2);
+}
+
+//  Função que escolhe o op code apropriado
 int escolha(FILE* entry, FILE* exit, regs* R){
-    char command[4];
+    char command[3];
     limpeza(command);
     fscanf(entry, "%s", command);
-    if(!strcmp(command, "SET")){
+    if(!strcmp(command, "ST")){
         int reg, info;
-        fscanf(entry, "%d %d", &reg, &info);
-        return SET(R, reg, info);
+        reg = charToBin(entry);
+        info = charToBin(entry);
+        return ST(R, reg, info);
     }
-    if(!strcmp(command, "SIN")){
-        int reg;
-        fscanf(entry, "%d", &reg);
-        return SIN(R, reg);
+    if(!strcmp(command, "SN")){
+        int reg = charToBin(entry);
+        return SN(R, reg);
     }
-    if(!strcmp(command, "HOP")){
-        int line;
-        fscanf(entry, "%d", &line);
-        return HOP(entry, line);
+    if(!strcmp(command, "HP")){
+        int line = charToBin(entry);
+        return HP(entry, line);
     }
-    if(!strcmp(command, "MEM")){
-        int reg;
-        fscanf(entry, "%d", &reg);
-        return MEM(R, exit, reg);
+    if(!strcmp(command, "MM")){
+        int reg = charToBin(entry);
+        return MM(R, exit, reg);
     }
-    if(!strcmp(command, "SUM")){
+    if(!strcmp(command, "SM")){
         int reg1, reg2;
-        fscanf(entry, "%d %d", &reg1, &reg2);
-        SUM(R, reg1, reg2);
+        reg1 = charToBin(entry);
+        reg2 = charToBin(entry);
+        SM(R, reg1, reg2);
         return 1;
     }
-    if(!strcmp(command, "SUB")){
+    if(!strcmp(command, "SB")){
         int reg1, reg2;
-        fscanf(entry, "%d %d", &reg1, &reg2);
-        SUB(R, reg1, reg2);
+        reg1 = charToBin(entry);
+        reg2 = charToBin(entry);
+        SB(R, reg1, reg2);
         return 1;
     }
-    if(!strcmp(command, "MOD")){
+    if(!strcmp(command, "MD")){
         int reg1, reg2;
-        fscanf(entry, "%d %d", &reg1, &reg2);
-        MOD(R, reg1, reg2);
+        reg1 = charToBin(entry);
+        reg2 = charToBin(entry);
+        MD(R, reg1, reg2);
         return 1;
     }
-    if(!strcmp(command, "FRC")){
-        int reg;
-        fscanf(entry, "%d", &reg);
-        FRC(R, reg);
+    if(!strcmp(command, "FR")){
+        int reg = charToBin(entry);
+        FR(R, reg);
         return 1;
     }
-    if(!strcmp(command, "EXP")){
+    if(!strcmp(command, "EX")){
         int reg1, reg2;
-        fscanf(entry, "%d %d", &reg1, &reg2);
-        EXP(R, reg1, reg2);
+        reg1 = charToBin(entry);
+        reg2 = charToBin(entry);
+        EX(R, reg1, reg2);
         return 1;
     }
-    if(!strcmp(command, "IEQ")){
+    if(!strcmp(command, "IE")){
         int reg1, reg2, line;
-        fscanf(entry, "%d %d %d", &reg1, &reg2, &line);
-        IEQ(entry, R, reg1, reg2, line);
+        reg1 = charToBin(entry);
+        reg2 = charToBin(entry);
+        line = charToBin(entry);
+        IE(entry, R, reg1, reg2, line);
         return 1; 
     }
-    if(!strcmp(command, "ILT")){
+    if(!strcmp(command, "IL")){
         int reg1, reg2, line;
-        fscanf(entry, "%d %d %d", &reg1, &reg2, &line);
-        ILT(entry, R, reg1, reg2, line);
+        reg1 = charToBin(entry);
+        reg2 = charToBin(entry);
+        line = charToBin(entry);
+        IL(entry, R, reg1, reg2, line);
         return 1;
     }
     return 0;
@@ -169,6 +224,8 @@ int main(){
     int saida = 1;
 
     FILE* entry = fopen("entrada.txt", "r");
+    max_linhas = tamanhoArquivo(entry);
+    entry = fopen("entrada.txt", "r");
     FILE* result = fopen("saida.txt", "w");
 
     while (saida == 1){
