@@ -31,12 +31,12 @@ int SN(regs* R, int reg){
 }
 
 //  Pula para a linha recebida (HOP)
-int HP(FILE* entry, int line){
+int HP(FILE* entry, int line, char Nome_arquivo[26]){
     if(line > max_linhas || line < 0)
         return 0;
     char trash[99];
     fclose(entry);
-    entry = fopen("entrada.txt", "r");
+    entry = fopen(Nome_arquivo, "r");
     for(int i = 0; i < line - 1; i++)
         fgets(trash, 99, entry);
     linha_atual = line - 1;
@@ -86,15 +86,15 @@ void EX(regs* R, int r1, int r2){
 
 ////  Funções lógicas
 //  Verifica igualdade, caso positivo, pule para linha recebida (r1 == r2 ? line)
-void IE(FILE* entry, regs* R, int r1, int r2, int line){
+void IE(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26]){
     if(R[r1].info == R[r2].info)
-        HP(entry, line);
+        HP(entry, line, Nome_arquivo);
 }
 
 //  Verifica se r1 é menor que r2, caso positivo, pule para linha recebida (r1 < r2 ? line)
-void IL(FILE* entry, regs* R, int r1, int r2, int line){
+void IL(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26]){
     if(R[r1].info < R[r2].info)
-        HP(entry, line);
+        HP(entry, line, Nome_arquivo);
 }
 
 
@@ -103,8 +103,7 @@ void IL(FILE* entry, regs* R, int r1, int r2, int line){
 void limpeza(char s[3]){
     for (int i = 0; i < 4; i++){
         s[i] = ' ';
-    }
-    
+    } 
 }
 
 // Calcula o número total de linhas no arquivo recebido
@@ -142,7 +141,7 @@ int charToBin(FILE* entry){
 }
 
 //  Função que escolhe o op code apropriado
-int escolha(FILE* entry, FILE* exit, regs* R){
+int escolha(FILE* entry, FILE* exit, regs* R, char Nome_arquivo[26]){
     char command[3];
     limpeza(command);
     fscanf(entry, "%s", command);
@@ -158,7 +157,7 @@ int escolha(FILE* entry, FILE* exit, regs* R){
     }
     if(!strcmp(command, "HP")){
         int line = charToBin(entry);
-        return HP(entry, line);
+        return HP(entry, line, Nome_arquivo);
     }
     if(!strcmp(command, "MM")){
         int reg = charToBin(entry);
@@ -202,7 +201,7 @@ int escolha(FILE* entry, FILE* exit, regs* R){
         reg1 = charToBin(entry);
         reg2 = charToBin(entry);
         line = charToBin(entry);
-        IE(entry, R, reg1, reg2, line);
+        IE(entry, R, reg1, reg2, line, Nome_arquivo);
         return 1; 
     }
     if(!strcmp(command, "IL")){
@@ -210,31 +209,34 @@ int escolha(FILE* entry, FILE* exit, regs* R){
         reg1 = charToBin(entry);
         reg2 = charToBin(entry);
         line = charToBin(entry);
-        IL(entry, R, reg1, reg2, line);
+        IL(entry, R, reg1, reg2, line, Nome_arquivo);
         return 1;
     }
     return 0;
 }
 
 int main(){
+    char Nome_arquivo[26];
     regs R[16];
     R[0].info = 0;
     R[1].info = 1;
 
     int saida = 1;
 
-    FILE* entry = fopen("entrada.txt", "r");
+    printf("Nome do arquivo de entrada: ");
+    scanf("%s", Nome_arquivo);
+
+    FILE* entry = fopen(Nome_arquivo, "r");
     max_linhas = tamanhoArquivo(entry);
-    entry = fopen("entrada.txt", "r");
+    entry = fopen(Nome_arquivo, "r");
     FILE* result = fopen("saida.txt", "w");
 
     while (saida == 1){
-        saida = escolha(entry, result, R);
+        saida = escolha(entry, result, R, Nome_arquivo);
         linha_atual++;
     }
 
     fclose(entry);
     fclose(result);
-
     return 0;
 }
