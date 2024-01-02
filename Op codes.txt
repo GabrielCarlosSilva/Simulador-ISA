@@ -1,0 +1,43 @@
+Este arquivo contem a descrição dos op codes criados para este trabalho.
+
+Funções administrativas
+São as Funções cujo propósito são organizar e manipular os registradores e a memoria
+
+1- ST reg info (SET)
+Salva a informação recibida em no registrador escolhido.
+
+2- SN reg (SET IN)
+Salva a informação contida em ACC para o registrador escolhido.
+
+3- HP line  (HOP)
+Pula para a linha escolhida.
+
+4- MM regs  (MEMORY)
+Salva a informação contida em ACC para a memoria ram.
+
+Funções matemáticas
+São as Funções responsáveis por realizar cálculos
+
+5- SM reg1 reg2 (reg1 + reg2 = ACC)
+Soma os dois registradores recebidos, armazena o resultado em ACC.
+
+6- SB reg1 reg2 (reg1 - reg2 = ACC)
+Subtrai os dois registradores recebidos, armazena o resultado em ACC.
+
+7- MD reg1 reg2 (reg1 % reg2 = ACC)
+Calcula o resto da divisão de reg1 por reg2 (reg1 % reg2), armazena o resultado em ACC.
+
+8- FR reg (reg! = ACC)
+Calcula o fatorial do registrador recebido, armazena o resultado em ACC.
+
+9- EX reg1 reg2 (reg1 ^ reg2)
+Eleva o primeiro registrador ao segundo, armazena o resultado em ACC.
+
+Funções lógicas
+Funções simples de comparação
+
+10- IE reg1 reg2 line (reg1 == reg2 ? HOP line)
+Verifica se a os dois registradores possuem o mesmo valor, caso positivo, pula para a linha recebida.
+
+11- IL reg1 reg2 line (reg1 < reg2 ? HOP line)
+Verifica se reg1 é menor que reg2, caso positivo, pula para a linha recebida.
