@@ -13,7 +13,7 @@ Salva a informação contida em ACC para o registrador escolhido.
 Pula para a linha escolhida.
 
 4- MM regs  (MEMORY)
-Salva a informação contida em ACC para a memoria ram.
+Salva a informação contida em ACC para a memoria.
 
 Funções matemáticas
 São as Funções responsáveis por realizar cálculos
