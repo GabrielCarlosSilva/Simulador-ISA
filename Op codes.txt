@@ -4,40 +4,34 @@ Funções administrativas
 São as Funções cujo propósito são organizar e manipular os registradores e a memoria
 
 1- ST reg info (SET)
-Salva a informação recibida em no registrador escolhido.
+Salva a informação recibida no registrador escolhido.
 
-2- SN reg (SET IN)
-Salva a informação contida em ACC para o registrador escolhido.
-
-3- HP line  (HOP)
+2- HP line  (HOP)
 Pula para a linha escolhida.
 
-4- MM regs  (MEMORY)
-Salva a informação contida em ACC para a memoria.
+3- MM regs (MEMORY)
+Salva a informação contida no registrador para a memoria.
 
 Funções matemáticas
 São as Funções responsáveis por realizar cálculos
 
-5- SM reg1 reg2 (reg1 + reg2 = ACC)
-Soma os dois registradores recebidos, armazena o resultado em ACC.
+4- SM reg1 reg2 reg3 (reg1 + reg2 = reg3)
+Soma os dois registradores recebidos, armazena o resultado em reg3.
 
-6- SB reg1 reg2 (reg1 - reg2 = ACC)
-Subtrai os dois registradores recebidos, armazena o resultado em ACC.
+5- SB reg1 reg2 reg3 (reg1 - reg2 = reg3)
+Subtrai os dois registradores recebidos, armazena o resultado em reg3.
 
-7- MD reg1 reg2 (reg1 % reg2 = ACC)
-Calcula o resto da divisão de reg1 por reg2 (reg1 % reg2), armazena o resultado em ACC.
+6- MD reg1 reg2 (reg1 % reg2 = reg3)
+Calcula o resto da divisão de reg1 por reg2 (reg1 % reg2), armazena o resultado em reg3.
 
-8- FR reg (reg! = ACC)
-Calcula o fatorial do registrador recebido, armazena o resultado em ACC.
-
-9- EX reg1 reg2 (reg1 ^ reg2)
-Eleva o primeiro registrador ao segundo, armazena o resultado em ACC.
+7- EX reg1 reg2 reg3 (reg1 ^ reg2 = reg3)
+Eleva o primeiro registrador ao segundo, armazena o resultado em reg3.
 
 Funções lógicas
 Funções simples de comparação
 
-10- IE reg1 reg2 line (reg1 == reg2 ? HOP line)
+8- IE reg1 reg2 line (reg1 == reg2 ? HOP line)
 Verifica se a os dois registradores possuem o mesmo valor, caso positivo, pula para a linha recebida.
 
-11- IL reg1 reg2 line (reg1 < reg2 ? HOP line)
+9- IL reg1 reg2 line (reg1 < reg2 ? HOP line)
 Verifica se reg1 é menor que reg2, caso positivo, pula para a linha recebida.
