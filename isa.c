@@ -2,7 +2,7 @@
 
 //// Funções administrativas
 //  Pula para a linha recebida (HOP)
-void HP(FILE* entry, int line, char Nome_arquivo[26]){
+void HOP(FILE* entry, int line, char Nome_arquivo[26]){
     char trash[99];
     fclose(entry);
     entry = fopen(Nome_arquivo, "r");
@@ -12,25 +12,25 @@ void HP(FILE* entry, int line, char Nome_arquivo[26]){
     }
 }
 //  Guarda a informação do registrador na memoria (MEMORY)
-void MM(FILE* exit, float info){
+void MEM(FILE* exit, float info){
     fprintf(exit, "%.0f \n", info);
 }
 
 //// Funções matemáticas
 // Soma simples, resultado em r3 (r1 + r2 = r3)
-float SM(float r1, float r2){
+float SUM(float r1, float r2){
     return r1 + r2;  
 }
 //  Subtração simples, resultado em r3 (r1 - r2 = r3)
-float SB(float r1, float r2){
+float SUB(float r1, float r2){
     return r1 - r2;  
 }
 //  Modulo simples, resultado em r3 (r1 % r2 = r3)
-float MD(float r1, float r2){
+float MOD(float r1, float r2){
     return ((int) r1 % (int) r2);  
 }
 //  Exponeciação simples, resultado em r3 (r²)
-float EX(float r1, float r2){
+float EXP(float r1, float r2){
     float retn = 1;
     for(int i = 0; i < (int) r2; i++)
         retn *= r1;

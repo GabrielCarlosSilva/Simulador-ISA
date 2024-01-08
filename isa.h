@@ -12,17 +12,17 @@ struct REGS{
     float info;
 };
 
-void ST(regs, float);
-void HP(FILE*, int, char[26]);
-void MM(FILE*, float);
+void SET(regs, float);
+void HOP(FILE*, int, char[26]);
+void MEM(FILE*, float);
 
-float SM(float, float);
-float SB(float, float);
-float MD(float, float);
-float EX(float, float);
+float SUM(float, float);
+float SUB(float, float);
+float MOD(float, float);
+float EXP(float, float);
 
-int IE(float, float);
-int IL(float, float);
+int IET(float, float);
+int ILT(float, float);
 
 void limpeza(char[3]);
 int tamanhoArquivo(FILE*);

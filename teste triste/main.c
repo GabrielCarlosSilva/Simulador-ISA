@@ -4,66 +4,66 @@ int escolha(FILE* entry, FILE* exit, regs* R, char Nome_arquivo[26], int max_lin
     char command[3];
     limpeza(command);
     fscanf(entry, "%s", command);
-    if(!strcmp(command, "ST")){
+    if(!strcmp(command, "SET")){
         int reg, info;
         reg = charToBin(entry);
         info = charToBin(entry);
-        return ST(R, reg, info);
+        return SET(R, reg, info);
     }
-    if(!strcmp(command, "HP")){
+    if(!strcmp(command, "HOP")){
         int line = charToBin(entry);
-        return HP(entry, line, Nome_arquivo, max_linhas);
+        return HOP(entry, line, Nome_arquivo, max_linhas);
     }
-    if(!strcmp(command, "MM")){
+    if(!strcmp(command, "MEM")){
         int reg = charToBin(entry);
-        return MM(R, exit, reg);
+        return MEM(R, exit, reg);
     }
-    if(!strcmp(command, "SM")){
+    if(!strcmp(command, "SUM")){
         int reg1, reg2, reg3;
         reg1 = charToBin(entry);
         reg2 = charToBin(entry);
         reg3 = charToBin(entry);
-        SM(R, reg1, reg2, reg3);
+        SUM(R, reg1, reg2, reg3);
         return 1;
     }
-    if(!strcmp(command, "SB")){
+    if(!strcmp(command, "SUB")){
         int reg1, reg2, reg3;
         reg1 = charToBin(entry);
         reg2 = charToBin(entry);
         reg3 = charToBin(entry);
-        SB(R, reg1, reg2, reg3);
+        SUB(R, reg1, reg2, reg3);
         return 1;
     }
-    if(!strcmp(command, "MD")){
+    if(!strcmp(command, "MOD")){
         int reg1, reg2, reg3;
         reg1 = charToBin(entry);
         reg2 = charToBin(entry);
         reg3 = charToBin(entry);
-        MD(R, reg1, reg2, reg3);
+        MOD(R, reg1, reg2, reg3);
         return 1;
     }
-    if(!strcmp(command, "EX")){
+    if(!strcmp(command, "EXP")){
         int reg1, reg2, reg3;
         reg1 = charToBin(entry);
         reg2 = charToBin(entry);
         reg3 = charToBin(entry);
-        EX(R, reg1, reg2, reg3);
+        EXP(R, reg1, reg2, reg3);
         return 1;
     }
-    if(!strcmp(command, "IE")){
+    if(!strcmp(command, "IET")){
         int reg1, reg2, line;
         reg1 = charToBin(entry);
         reg2 = charToBin(entry);
         line = charToBin(entry);
-        IE(entry, R, reg1, reg2, line, Nome_arquivo, max_linhas);
+        IET(entry, R, reg1, reg2, line, Nome_arquivo, max_linhas);
         return 1; 
     }
-    if(!strcmp(command, "IL")){
+    if(!strcmp(command, "ILT")){
         int reg1, reg2, line;
         reg1 = charToBin(entry);
         reg2 = charToBin(entry);
         line = charToBin(entry);
-        IL(entry, R, reg1, reg2, line, Nome_arquivo, max_linhas);
+        ILT(entry, R, reg1, reg2, line, Nome_arquivo, max_linhas);
         return 1;
     }
     return 0;
