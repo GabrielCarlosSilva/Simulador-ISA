@@ -21,17 +21,23 @@ Soma os dois registradores recebidos, armazena o resultado em reg3.
 5- SUB reg1 reg2 reg3 (reg1 - reg2 = reg3)
 Subtrai os dois registradores recebidos, armazena o resultado em reg3.
 
-6- MOD reg1 reg2 (reg1 % reg2 = reg3)
+6-MUL reg1 reg2 reg3 (reg * reg2 = reg3)
+Multiplica os dois registradores recebidos, armazena o resultado em reg3.
+
+7-DIV reg1 reg2 reg3 (reg / reg2 = reg3)
+Divide os dois registradores recebidos, armazena o resultado em reg3.
+
+8- MOD reg1 reg2 (reg1 % reg2 = reg3)
 Calcula o resto da divisão de reg1 por reg2 (reg1 % reg2), armazena o resultado em reg3.
 
-7- EXP reg1 reg2 reg3 (reg1 ^ reg2 = reg3)
+9- EXP reg1 reg2 reg3 (reg1 ^ reg2 = reg3)
 Eleva o primeiro registrador ao segundo, armazena o resultado em reg3.
 
 Funções lógicas
 Funções simples de comparação
 
-8- IET reg1 reg2 line (reg1 == reg2 ? HOP line)
+10- IET reg1 reg2 line (reg1 == reg2 ? HOP line)
 Verifica se a os dois registradores possuem o mesmo valor, caso positivo, pula para a linha recebida.
 
-9- ILT reg1 reg2 line (reg1 < reg2 ? HOP line)
+11- ILT reg1 reg2 line (reg1 < reg2 ? HOP line)
 Verifica se reg1 é menor que reg2, caso positivo, pula para a linha recebida.

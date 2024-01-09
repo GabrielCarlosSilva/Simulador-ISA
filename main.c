@@ -73,7 +73,20 @@ int main(){
                 R[reg3].info = SUB(R[reg1].info, R[reg2].info);
                 printf("SUBTRAÇÂO: R%d - R%d (%.1f)\n", reg1, reg2, R[reg].info);
             }
-    
+            if(!strcmp(command, "DIV")){
+                fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
+                if(checker(reg1, reg2, reg3))
+                    break;
+                R[reg3].info = DIV(R[reg1].info, R[reg2].info);
+                printf("SUBTRAÇÂO: R%d - R%d (%.1f)\n", reg1, reg2, R[reg].info);
+            }
+            if(!strcmp(command, "MUL")){
+                fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
+                if(checker(reg1, reg2, reg3))
+                    break;
+                R[reg3].info = MUL(R[reg1].info, R[reg2].info);
+                printf("SUBTRAÇÂO: R%d - R%d (%.1f)\n", reg1, reg2, R[reg].info);
+            }    
             if(!strcmp(command, "MOD")){
                 fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
                 if(checker(reg1, reg2, reg3))

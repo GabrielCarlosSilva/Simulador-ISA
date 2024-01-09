@@ -18,6 +18,8 @@ void MEM(FILE*, float);
 
 float SUM(float, float);
 float SUB(float, float);
+float MUL(float, float);
+float DIV(float, float);
 float MOD(float, float);
 float EXP(float, float);
 
@@ -26,7 +28,5 @@ int ILT(float, float);
 
 void limpeza(char[3]);
 int tamanhoArquivo(FILE*);
-float binToFloat(char*);
-float charToBin(FILE*);
 
 #endif

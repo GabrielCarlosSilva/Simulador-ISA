@@ -16,19 +16,27 @@ void MEM(FILE* exit, float info){
 }
 
 //// Funções matemáticas
-// Soma simples, resultado em r3 (r1 + r2 = r3)
+// Soma simples (r1 + r2)
 float SUM(float r1, float r2){
     return r1 + r2;  
 }
-//  Subtração simples, resultado em r3 (r1 - r2 = r3)
+//  Subtração simples (r1 - r2)
 float SUB(float r1, float r2){
     return r1 - r2;  
 }
-//  Modulo simples, resultado em r3 (r1 % r2 = r3)
+//  Multuplicação simples (r1 * r2)
+float MUL(float r1, float r2){
+    return r1 * r2;
+}
+// Divisão simples (r1 / r2)
+float DIV(float r1, float r2){
+    return r1 / r2;
+}
+//  Modulo simples (r1 % r2)
 float MOD(float r1, float r2){
     return ((int) r1 % (int) r2);  
 }
-//  Exponeciação simples, resultado em r3 (r²)
+//  Exponeciação simples (r1 ^ r2)
 float EXP(float r1, float r2){
     float retn = 1;
     for(int i = 0; i < (int) r2; i++)
@@ -50,25 +58,4 @@ int tamanhoArquivo(FILE* arq){
         linhas++;
     fclose(arq);
     return linhas + 1;
-}
-// Converte binário para ponto flutuante
-float binToFloat(char *bin){
-    float saida = 0.0;
-    int potencia = 1;
-    for (int i = 7; i >= 0; i--){
-        if(bin[i] == '1')
-            saida += potencia;
-        potencia *= 2;
-    }
-    return saida;
-}
-// Converte charactere para binário
-float charToBin(FILE* entry){
-    char bin1[8], bin2[8];
-    fscanf(entry, "%s", bin1);
-    for(int i = 0; i < 8; i++)
-        bin2[i] = '0';
-    for (int i = 0; i < (int) strlen(bin1); i++)
-        bin2[7 - i] = bin1[strlen(bin1) - i - 1];
-    return binToFloat(bin2);
 }
