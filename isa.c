@@ -7,7 +7,6 @@ void HOP(FILE* entry, int line, char Nome_arquivo[26]){
     fclose(entry);
     entry = fopen(Nome_arquivo, "r");
     for(int i = 0; i < line - 1; i++){
-        printf("ping %d\n", i);
         fgets(trash, 98, entry);
     }
 }
