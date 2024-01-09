@@ -1,7 +1,7 @@
 SET 3 2 
 MEM 3 
 SET 2 3 
-SET 5 10000 
+SET 5 100
 MOD 2 3 4 
 IET 4 0 10 
 SUM 3 1 3 

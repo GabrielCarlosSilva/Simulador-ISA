@@ -24,7 +24,7 @@ int main(){
     entry = fopen(Nome_arquivo, "r");
     FILE* result = fopen("saida.txt", "w");
 
-    char command[3];
+    char command[4];
 
 
     int reg, reg1, reg2, reg3, line;
@@ -32,97 +32,90 @@ int main(){
 
     printf("%d\n\n", max_linhas);
     while (linha_atual <= max_linhas){
-        printf("linha %d: ", linha_atual);
         limpeza(command);
         fscanf(entry, "%s", command);
+        printf("linha %d %s: ", linha_atual, command);
             if(!strcmp(command, "SET")){
-                reg = (int) charToBin(entry);
-                info = charToBin(entry);
+                fscanf(entry, "%d %f", &reg, &info);
                 if(reg > 15 || reg < 2)
                     break;  
                 R[reg].info = info;
-                printf("SET resgistrador %d %.1f\n", reg, info);
+                printf("SET resgistrador%d (valor: %.1f)\n", reg, info);
             }
 
             if(!strcmp(command, "HOP")){
-                line = (int) charToBin(entry);
+                fscanf(entry, "%d", &line);
                 if(line < 0 || line > max_linhas)
                     break;
                 HOP(entry, line, Nome_arquivo);
                 linha_atual = line - 1;
-                printf("Linha atual:  %d", line);
+                printf("Linha atual:  %d\n", line);
             }
 
             if(!strcmp(command, "MEM")){
-                reg = (int) charToBin(entry);
+                fscanf(entry, "%d", &reg);
                 MEM(result, R[reg].info);
-                printf("Memória armazenada %d  '%.1f'\n", reg, R[reg].info);
+                printf("Memória armazenada %d (valor: %.1f)\n", reg, R[reg].info);
             }
 
             if(!strcmp(command, "SUM")){
-                reg1 = (int) charToBin(entry);
-                reg2 = (int) charToBin(entry);
-                reg3 = (int) charToBin(entry);
+                fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = SUM(R[reg1].info, R[reg2].info);
-                printf("SOMA R%d + R%d\n", reg1, reg2);
+                printf("SOMA R%d + R%d (%.1f)\n", reg1, reg2, R[reg3].info);
             }
     
             if(!strcmp(command, "SUB")){
-                reg1 = (int) charToBin(entry);
-                reg2 = (int) charToBin(entry);
-                reg3 = (int) charToBin(entry);
+                fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = SUB(R[reg1].info, R[reg2].info);
-                printf("SUBTRAÇÂO: R%d - R%d\n", reg1, reg2);
+                printf("SUBTRAÇÂO: R%d - R%d (%.1f)\n", reg1, reg2, R[reg].info);
             }
     
             if(!strcmp(command, "MOD")){
-                reg1 = (int) charToBin(entry);
-                reg2 = (int) charToBin(entry);
-                reg3 = (int) charToBin(entry);
+                fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = MOD(R[reg1].info, R[reg2].info);
-                printf("MODULO: R%d %% R%d %.1f\n", reg1, reg2, R[reg3].info);
+                printf("MODULO: R%d %% R%d (%.1f)\n", reg1, reg2, R[reg3].info);
             }
     
             if(!strcmp(command, "EXP")){
-                reg1 = (int) charToBin(entry);
-                reg2 = (int) charToBin(entry);
-                reg3 = (int) charToBin(entry);
+                fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = EXP(R[reg1].info, R[reg2].info);
-                printf("EXPONENCIAÇÃO: R%d ^ R%d\n", reg1, reg2);
+                printf("EXPONENCIAÇÃO: R%d ^ R%d (%.1f)\n", reg1, reg2, R[reg3].info);
             }
 
             if(!strcmp(command, "IET")){
-                reg1 = (int) charToBin(entry);
-                reg2 = (int) charToBin(entry);
-                line = (int) charToBin(entry); 
+                fscanf(entry, "%d %d %d", &reg1, &reg2, &line);
                 if(checker(reg1, reg2, 5) || (line > max_linhas || line < 0))
                     break;
+                printf("Comparação...\n");
                 if(R[reg1].info == R[reg2].info){
+                    if(line < 0 || line > max_linhas)
+                        break;  
+                    printf("Pulando para linha %d\n", line);
                     HOP(entry, line, Nome_arquivo);
                     linha_atual = line - 1;
                 }
-                printf("Comparação...\n");
             }
 
             if(!strcmp(command, "ILT")){
-                reg1 = (int) charToBin(entry);
-                reg2 = (int) charToBin(entry);
-                line = (int) charToBin(entry);
+                fscanf(entry, "%d %d %d", &reg1, &reg2, &line);
                 if(checker(reg1, reg2, 5) || (line > max_linhas || line < 0))
                     break;
+                printf("Comparação... %d %d\n", reg1, reg2);
                 if(R[reg1].info < R[reg2].info){
+                    if(line < 0 || line > max_linhas)
+                        break;
+                    printf("Pulando para linha %d\n", line);
                     HOP(entry, line, Nome_arquivo);
                     linha_atual = line - 1;
                 }
-                printf("Comparação... %d %d\n", reg1, reg2);
             }
 
         linha_atual++;
