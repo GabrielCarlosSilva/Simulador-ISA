@@ -4,12 +4,12 @@
 #include <string.h>
 
 typedef struct{
-    int info;
+    float info;
 }regs;
 
 //// Funções administrativas
 //  Salva a informação recibida em um registrador cuja posição foi recebida (SET)
-int SET(regs* R, int reg, int info){
+int SET(regs* R, int reg, float info){
     if(reg > 15 || reg <= 1)
         return 0;
     R[reg].info = info;
@@ -32,7 +32,7 @@ int HOP(FILE* entry, int line, char Nome_arquivo[26], int max_linhas){
 int MEM(regs* R, FILE* exit, int reg){
     if(reg > 15 || reg <= 1)
         return 0;
-    fprintf(exit, "%d \n", R[reg].info);
+    fprintf(exit, "%f \n", R[reg].info);
     return 1;
 }
 
@@ -45,6 +45,14 @@ void SUM(regs* R, int r1, int r2, int r3){
 //  Subtração simples, resultado em r3 (r1 - r2 = r3)
 void SUB(regs* R, int r1, int r2, int r3){
     R[r3].info = R[r1].info - R[r2].info;
+}
+
+void MUL(regs* R, int r1, int r2, int r3){
+    R[r3].info = R[r1].info * R[r2].info;
+}
+
+void DIV(regs* R, int r1, int r2, int r3){
+    R[r3].info = R[r1].info / R[r2].info;
 }
 
 //  Modulo simples, resultado em r3 (r1 % r2 = r3)
@@ -67,6 +75,11 @@ void IET(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], 
 //  Verifica se r1 é menor que r2, caso positivo, pule para linha recebida (r1 < r2 ? line)
 void ILT(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], int max_linhas){
     if(R[r1].info < R[r2].info)
+        HOP(entry, line, Nome_arquivo, max_linhas);
+}
+
+void IGT(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], int max_linhas){
+    if(R[r1].info > R[r2].info)
         HOP(entry, line, Nome_arquivo, max_linhas);
 }
 
@@ -97,9 +110,10 @@ int escolha(FILE* entry, FILE* exit, regs* R, char Nome_arquivo[26], int max_lin
     limpeza(command);
     fscanf(entry, "%s", command);
     if(!strcmp(command, "SET")){
-        int reg, info;
+        int reg;
+        float info;
         fscanf(entry, "%d", &reg);
-        fscanf(entry, "%d", &info);
+        fscanf(entry, "%f", &info);
         return SET(R, reg, info);
     }
     if(!strcmp(command, "HOP")){
@@ -122,6 +136,18 @@ int escolha(FILE* entry, FILE* exit, regs* R, char Nome_arquivo[26], int max_lin
         int reg1, reg2, reg3;
         fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
         SUB(R, reg1, reg2, reg3);
+        return 1;
+    }
+    if(!strcmp(command, "MUL")){
+        int reg1, reg2, reg3;
+        fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
+        MUL(R, reg1, reg2, reg3);
+        return 1;
+    }
+    if(!strcmp(command, "DIV")){
+        int reg1, reg2, reg3;
+        fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
+        DIV(R, reg1, reg2, reg3);
         return 1;
     }
     if(!strcmp(command, "MOD")){
@@ -148,6 +174,12 @@ int escolha(FILE* entry, FILE* exit, regs* R, char Nome_arquivo[26], int max_lin
         ILT(entry, R, reg1, reg2, line, Nome_arquivo, max_linhas);
         return 1;
     }
+    if(!strcmp(command, "IGT")){
+        int reg1, reg2, line;
+        fscanf(entry, "%d %d %d", &reg1, &reg2, &line);
+        IGT(entry, R, reg1, reg2, line, Nome_arquivo, max_linhas);
+        return 1;
+    }
     return 0;
 }
 
@@ -155,8 +187,8 @@ int escolha(FILE* entry, FILE* exit, regs* R, char Nome_arquivo[26], int max_lin
 int main(){
     char Nome_arquivo[26];
     regs R[16];
-    R[0].info = 0;
-    R[1].info = 1;
+    R[0].info = 0.0;
+    R[1].info = 1.0;
 
     int saida = 1;
 
