@@ -12,15 +12,15 @@ struct REGS{
     float info;
 };
 
-int ST(regs*, int, int);
-int HP(FILE*, int, char[26], int);
-int MM(regs* R, FILE*, int);
-void SM(regs*, int, int, int);
-void SB(regs*, int, int, int);
-void MD(regs*, int, int, int);
-void EX(regs*, int, int, int);
-void IE(FILE*, regs*, int, int, int, char[26], int);
-void IL(FILE*, regs*, int, int, int, char[26], int);
+int SET(regs*, int, int);
+int HOP(FILE*, int, char[26], int);
+int MEM(regs* R, FILE*, int);
+void SUM(regs*, int, int, int);
+void SUB(regs*, int, int, int);
+void MOD(regs*, int, int, int);
+void EXP(regs*, int, int, int);
+void IET(FILE*, regs*, int, int, int, char[26], int);
+void ILT(FILE*, regs*, int, int, int, char[26], int);
 void limpeza(char[3]);
 int tamanhoArquivo(FILE* arq);
 float binToFloat(char*);

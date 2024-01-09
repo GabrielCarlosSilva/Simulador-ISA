@@ -35,7 +35,7 @@ int main(){
         printf("linha %d: ", linha_atual);
         limpeza(command);
         fscanf(entry, "%s", command);
-            if(!strcmp(command, "ST")){
+            if(!strcmp(command, "SET")){
                 reg = (int) charToBin(entry);
                 info = charToBin(entry);
                 if(reg > 15 || reg < 2)
@@ -44,82 +44,82 @@ int main(){
                 printf("SET resgistrador %d %.1f\n", reg, info);
             }
 
-            if(!strcmp(command, "HP")){
+            if(!strcmp(command, "HOP")){
                 line = (int) charToBin(entry);
                 if(line < 0 || line > max_linhas)
                     break;
-                HP(entry, line, Nome_arquivo);
+                HOP(entry, line, Nome_arquivo);
                 linha_atual = line - 1;
                 printf("Linha atual:  %d", line);
             }
 
-            if(!strcmp(command, "MM")){
+            if(!strcmp(command, "MEM")){
                 reg = (int) charToBin(entry);
-                MM(result, R[reg].info);
+                MEM(result, R[reg].info);
                 printf("Memória armazenada %d  '%.1f'\n", reg, R[reg].info);
             }
 
-            if(!strcmp(command, "SM")){
+            if(!strcmp(command, "SUM")){
                 reg1 = (int) charToBin(entry);
                 reg2 = (int) charToBin(entry);
                 reg3 = (int) charToBin(entry);
                 if(checker(reg1, reg2, reg3))
                     break;
-                R[reg3].info = SM(R[reg1].info, R[reg2].info);
+                R[reg3].info = SUM(R[reg1].info, R[reg2].info);
                 printf("SOMA R%d + R%d\n", reg1, reg2);
             }
     
-            if(!strcmp(command, "SB")){
+            if(!strcmp(command, "SUB")){
                 reg1 = (int) charToBin(entry);
                 reg2 = (int) charToBin(entry);
                 reg3 = (int) charToBin(entry);
                 if(checker(reg1, reg2, reg3))
                     break;
-                R[reg3].info = SB(R[reg1].info, R[reg2].info);
+                R[reg3].info = SUB(R[reg1].info, R[reg2].info);
                 printf("SUBTRAÇÂO: R%d - R%d\n", reg1, reg2);
             }
     
-            if(!strcmp(command, "MD")){
+            if(!strcmp(command, "MOD")){
                 reg1 = (int) charToBin(entry);
                 reg2 = (int) charToBin(entry);
                 reg3 = (int) charToBin(entry);
                 if(checker(reg1, reg2, reg3))
                     break;
-                R[reg3].info = MD(R[reg1].info, R[reg2].info);
+                R[reg3].info = MOD(R[reg1].info, R[reg2].info);
                 printf("MODULO: R%d %% R%d %.1f\n", reg1, reg2, R[reg3].info);
             }
     
-            if(!strcmp(command, "EX")){
+            if(!strcmp(command, "EXP")){
                 reg1 = (int) charToBin(entry);
                 reg2 = (int) charToBin(entry);
                 reg3 = (int) charToBin(entry);
                 if(checker(reg1, reg2, reg3))
                     break;
-                R[reg3].info = EX(R[reg1].info, R[reg2].info);
+                R[reg3].info = EXP(R[reg1].info, R[reg2].info);
                 printf("EXPONENCIAÇÃO: R%d ^ R%d\n", reg1, reg2);
             }
 
-            if(!strcmp(command, "IE")){
+            if(!strcmp(command, "IET")){
                 reg1 = (int) charToBin(entry);
                 reg2 = (int) charToBin(entry);
                 line = (int) charToBin(entry); 
                 if(checker(reg1, reg2, 5) || (line > max_linhas || line < 0))
                     break;
                 if(R[reg1].info == R[reg2].info){
-                    HP(entry, line, Nome_arquivo);
+                    HOP(entry, line, Nome_arquivo);
                     linha_atual = line - 1;
                 }
                 printf("Comparação...\n");
             }
 
-            if(!strcmp(command, "IL")){
+            if(!strcmp(command, "ILT")){
                 reg1 = (int) charToBin(entry);
                 reg2 = (int) charToBin(entry);
                 line = (int) charToBin(entry);
                 if(checker(reg1, reg2, 5) || (line > max_linhas || line < 0))
                     break;
                 if(R[reg1].info < R[reg2].info){
-                    HP(entry, line, Nome_arquivo);
+                    HOP(entry, line, Nome_arquivo);
                     linha_atual = line - 1;
                 }
                 printf("Comparação... %d %d\n", reg1, reg2);

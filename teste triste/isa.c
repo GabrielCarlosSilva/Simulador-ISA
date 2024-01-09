@@ -2,7 +2,7 @@
 
 //// Funções administrativas
 //  Salva a informação recibida em um registrador cuja posição foi recebida (SET)
-int ST(regs* R, int reg, int info){
+int SET(regs* R, int reg, int info){
     if(reg > 15 || reg <= 1)
         return 0;
     R[reg].info = info;
@@ -10,7 +10,7 @@ int ST(regs* R, int reg, int info){
 }
 
 //  Pula para a linha recebida (HOP)
-int HP(FILE* entry, int line, char Nome_arquivo[26], int max_linhas){
+int HOP(FILE* entry, int line, char Nome_arquivo[26], int max_linhas){
     if(line > max_linhas || line < 0)
         return 0;
     char trash[99];
@@ -22,7 +22,7 @@ int HP(FILE* entry, int line, char Nome_arquivo[26], int max_linhas){
 }
 
 //  Guarda a informação do registrador na memoria (MEMORY)
-int MM(regs* R, FILE* exit, int reg){
+int MEM(regs* R, FILE* exit, int reg){
     if(reg > 15 || reg <= 1)
         return 0;
     fprintf(exit, "%.0f \n", R[reg].info);
@@ -31,22 +31,22 @@ int MM(regs* R, FILE* exit, int reg){
 
 //// Funções matemáticas
 // Soma simples, resultado em r3 (r1 + r2 = r3)
-void SM(regs* R, int r1, int r2, int r3){
+void SUM(regs* R, int r1, int r2, int r3){
     R[r3].info = R[r1].info + R[r2].info;
 }
 
 //  Subtração simples, resultado em r3 (r1 - r2 = r3)
-void SB(regs* R, int r1, int r2, int r3){
+void SUB(regs* R, int r1, int r2, int r3){
     R[r3].info = R[r1].info - R[r2].info;
 }
 
 //  Modulo simples, resultado em r3 (r1 % r2 = r3)
-void MD(regs* R, int r1, int r2, int r3){
+void MOD(regs* R, int r1, int r2, int r3){
     R[r3].info = (int) R[r1].info % (int) R[r2].info;
 }
 
 //  Exponeciação simples, resultado em r3 (r²)
-void EX(regs* R, int r1, int r2, int r3){
+void EXP(regs* R, int r1, int r2, int r3){
     R[r3].info = R[r1].info;
     for (int i = 0; i < (int) R[r2].info; i++){
         R[r3].info *= R[r1].info; 
@@ -55,15 +55,15 @@ void EX(regs* R, int r1, int r2, int r3){
 
 ////  Funções lógicas
 //  Verifica igualdade, caso positivo, pule para linha recebida (r1 == r2 ? line)
-void IE(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], int max_linhas){
+void IET(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], int max_linhas){
     if(R[r1].info == R[r2].info)
-        HP(entry, line, Nome_arquivo, max_linhas);
+        HOP(entry, line, Nome_arquivo, max_linhas);
 }
 
 //  Verifica se r1 é menor que r2, caso positivo, pule para linha recebida (r1 < r2 ? line)
-void IL(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], int max_linhas){
+void ILT(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], int max_linhas){
     if(R[r1].info < R[r2].info)
-        HP(entry, line, Nome_arquivo, max_linhas);
+        HOP(entry, line, Nome_arquivo, max_linhas);
 }
 
 
