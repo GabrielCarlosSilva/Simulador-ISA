@@ -46,13 +46,13 @@ int EnviaInstrucao(int PC, char*nome){
     Memoria mem;
     FILE* entry = fopen(nome,"r");
     int max_linhas=tamanhoArquivo(entry);
-    if(PC>max_linhas){
+    if(PC>=max_linhas){
         fclose(entry);
         return 0;
     }
-    for(int i=0; i<PC; i++)
+    for(int i=1; i<=PC; i++)
         fgets(mem.instrucao, 100, entry);
-    
+
     FILE* instrucao = fopen("instrucao.txt", "w");
     fprintf(instrucao, "%s", mem.instrucao);
     fclose(entry);

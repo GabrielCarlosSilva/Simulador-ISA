@@ -6,6 +6,7 @@
 #include <math.h>
 #include <string.h>
 
+
 typedef struct REGS regs;
 typedef struct CONTROL CoUn;
 

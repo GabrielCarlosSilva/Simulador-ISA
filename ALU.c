@@ -59,16 +59,20 @@ void EXP(regs* R, int r1, int r2, int r3){
 ////  Funções lógicas
 //  Verifica igualdade, caso positivo, pule para linha recebida (r1 == r2 ? line)
 int IET(regs* R, int r1, int r2, int line,int PC){
-    if(R[r1].info == R[r2].info)
-        return HOP(line);
-    else
+    if(R[r1].info == R[r2].info){
+        return HOP(line)-1;
+    }
+    else{
         return PC;
+    }
 }
 
 //  Verifica se r1 é menor que r2, caso positivo, pule para linha recebida (r1 < r2 ? line)
 int ILT(regs* R, int r1, int r2, int line, int PC){
-    if(R[r1].info < R[r2].info)
-        return HOP(line);
-    else
+    if(R[r1].info < R[r2].info){
+        return HOP(line)-1;
+    }
+    else{
         return PC;
+    }
 }
