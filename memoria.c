@@ -9,35 +9,52 @@
 typedef struct{
     int* RAM;
     int Mem_Instrucao;
+    char instrucao[100];
 }Memoria;
 
 
 
-FILE* memoria(char* nom){
+int GastoMemoria(char* nome){
 
     Memoria mem;
-    char linha[1024];
-    mem.RAM=0;
     mem.Mem_Instrucao=0;
-    FILE* entry = fopen(nom, "r");
+    FILE* entry = fopen(nome, "r");
     int max_linhas = tamanhoArquivo(entry);
     for(int i=0; i<max_linhas; i++){
 
-        fgets(linha,1024, entry);
-        mem.Mem_Instrucao = analise_opcode(linha);
+        fgets(mem.instrucao,100, entry);
+        mem.Mem_Instrucao = analise_opcode(mem.instrucao);
         if(mem.Mem_Instrucao<=MAX_INSTRU){
             mem.RAM=mem.RAM+mem.Mem_Instrucao;
         }
-        if(mem.RAM>MAX_RAM){
+        if(mem.RAM>MAX_RAM || mem.Mem_Instrucao>MAX_INSTRU){
             printf("Memória Principal Sobrecarregada. Abortar Execução!\n");
-            exit(1);
-        }
-            
+            fclose(entry);
+            return 0;
+        }       
     }
+    fclose(entry);
+
+    return 1;
+}
+
+int EnviaInstrucao(int PC, char*nome){
+
+    Memoria mem;
+    FILE* entry = fopen(nome,"r");
+    int max_linhas=tamanhoArquivo(entry);
+    if(PC>max_linhas){
+        fclose(entry);
+        return 0;
+    }
+    for(int i=0; i<PC; i++)
+        fgets(mem.instrucao, 100, entry);
     
-    rewind(entry);
-    return entry;
-    
+    FILE* instrucao = fopen("instrucao.txt", "w");
+    fprintf(instrucao, "%s", mem.instrucao);
+    fclose(entry);
+    fclose(instrucao);
+    return 1;
 }
 
 int analise_opcode(char* linha){
