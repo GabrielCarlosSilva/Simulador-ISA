@@ -28,7 +28,7 @@ int main(){
 
 
     int reg, reg1, reg2, reg3, line;
-    float info;
+    double info;
 
     printf("%d\n\n", max_linhas);
     while (linha_atual <= max_linhas){
@@ -36,11 +36,11 @@ int main(){
         fscanf(entry, "%s", command);
         printf("linha %d %s: ", linha_atual, command);
             if(!strcmp(command, "SET")){
-                fscanf(entry, "%d %f", &reg, &info);
+                fscanf(entry, "%d %lf", &reg, &info);
                 if(reg > 15 || reg < 2)
                     break;  
                 R[reg].info = info;
-                printf("SET resgistrador%d (valor: %.1f)\n", reg, info);
+                printf("SET resgistrador%d (valor: %.1lf)\n", reg, info);
             }
 
             if(!strcmp(command, "HOP")){
@@ -55,7 +55,7 @@ int main(){
             if(!strcmp(command, "MEM")){
                 fscanf(entry, "%d", &reg);
                 MEM(result, R[reg].info);
-                printf("Memória armazenada %d (valor: %.1f)\n", reg, R[reg].info);
+                printf("Memória armazenada %d (valor: %.1lf)\n", reg, R[reg].info);
             }
 
             if(!strcmp(command, "SUM")){
@@ -63,7 +63,7 @@ int main(){
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = SUM(R[reg1].info, R[reg2].info);
-                printf("SOMA R%d + R%d (%.1f)\n", reg1, reg2, R[reg3].info);
+                printf("SOMA R%d + R%d (%.1lf)\n", reg1, reg2, R[reg3].info);
             }
     
             if(!strcmp(command, "SUB")){
@@ -71,28 +71,31 @@ int main(){
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = SUB(R[reg1].info, R[reg2].info);
-                printf("SUBTRAÇÂO: R%d - R%d (%.1f)\n", reg1, reg2, R[reg].info);
+                printf("SUBTRAÇÂO: R%d - R%d (%.1lf)\n", reg1, reg2, R[reg].info);
             }
+
             if(!strcmp(command, "DIV")){
                 fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = DIV(R[reg1].info, R[reg2].info);
-                printf("SUBTRAÇÂO: R%d - R%d (%.1f)\n", reg1, reg2, R[reg].info);
+                printf("SUBTRAÇÂO: R%d - R%d (%.1lf)\n", reg1, reg2, R[reg].info);
             }
+
             if(!strcmp(command, "MUL")){
                 fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = MUL(R[reg1].info, R[reg2].info);
-                printf("SUBTRAÇÂO: R%d - R%d (%.1f)\n", reg1, reg2, R[reg].info);
-            }    
+                printf("SUBTRAÇÂO: R%d - R%d (%.1lf)\n", reg1, reg2, R[reg].info);
+            }
+
             if(!strcmp(command, "MOD")){
                 fscanf(entry, "%d %d %d", &reg1, &reg2, &reg3);
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = MOD(R[reg1].info, R[reg2].info);
-                printf("MODULO: R%d %% R%d (%.1f)\n", reg1, reg2, R[reg3].info);
+                printf("MODULO: R%d %% R%d (%.1lf)\n", reg1, reg2, R[reg3].info);
             }
     
             if(!strcmp(command, "EXP")){
@@ -100,7 +103,7 @@ int main(){
                 if(checker(reg1, reg2, reg3))
                     break;
                 R[reg3].info = EXP(R[reg1].info, R[reg2].info);
-                printf("EXPONENCIAÇÃO: R%d ^ R%d (%.1f)\n", reg1, reg2, R[reg3].info);
+                printf("EXPONENCIAÇÃO: R%d ^ R%d (%.1lf)\n", reg1, reg2, R[reg3].info);
             }
 
             if(!strcmp(command, "IET")){
@@ -133,7 +136,7 @@ int main(){
 
         linha_atual++;
     }
-
+    printf("Fim da execução!\n");
     fclose(entry);
     fclose(result);
     return 0;

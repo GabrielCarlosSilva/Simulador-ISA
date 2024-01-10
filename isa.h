@@ -9,22 +9,22 @@
 typedef struct REGS regs;
 
 struct REGS{
-    float info;
+    double info;
 };
 
-void SET(regs, float);
+void SET(regs,  double);
 void HOP(FILE*, int, char[26]);
-void MEM(FILE*, float);
+void MEM(FILE*, double);
 
-float SUM(float, float);
-float SUB(float, float);
-float MUL(float, float);
-float DIV(float, float);
-float MOD(float, float);
-float EXP(float, float);
+double SUM(double, double);
+double SUB(double, double);
+double MUL(double, double);
+double DIV(double, double);
+double MOD(double, double);
+double EXP(double, double);
 
-int IET(float, float);
-int ILT(float, float);
+int IET(double, double);
+int ILT(double, double);
 
 void limpeza(char[3]);
 int tamanhoArquivo(FILE*);

@@ -11,34 +11,34 @@ void HOP(FILE* entry, int line, char Nome_arquivo[26]){
     }
 }
 //  Guarda a informação do registrador na memoria (MEMORY)
-void MEM(FILE* exit, float info){
-    fprintf(exit, "%.0f \n", info);
+void MEM(FILE* exit, double info){
+    fprintf(exit, "%.0lf \n", info);
 }
 
 //// Funções matemáticas
 // Soma simples (r1 + r2)
-float SUM(float r1, float r2){
+double SUM(double r1, double r2){
     return r1 + r2;  
 }
 //  Subtração simples (r1 - r2)
-float SUB(float r1, float r2){
+double SUB(double r1, double r2){
     return r1 - r2;  
 }
 //  Multuplicação simples (r1 * r2)
-float MUL(float r1, float r2){
+double MUL(double r1, double r2){
     return r1 * r2;
 }
 // Divisão simples (r1 / r2)
-float DIV(float r1, float r2){
+double DIV(double r1, double r2){
     return r1 / r2;
 }
 //  Modulo simples (r1 % r2)
-float MOD(float r1, float r2){
+double MOD(double r1, double r2){
     return ((int) r1 % (int) r2);  
 }
 //  Exponeciação simples (r1 ^ r2)
-float EXP(float r1, float r2){
-    float retn = 1;
+double EXP(double r1, double r2){
+    double retn = 1;
     for(int i = 0; i < (int) r2; i++)
         retn *= r1;
     return retn;
