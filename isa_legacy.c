@@ -78,12 +78,6 @@ void ILT(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], 
         HOP(entry, line, Nome_arquivo, max_linhas);
 }
 
-void IGT(FILE* entry, regs* R, int r1, int r2, int line, char Nome_arquivo[26], int max_linhas){
-    if(R[r1].info > R[r2].info)
-        HOP(entry, line, Nome_arquivo, max_linhas);
-}
-
-
 //// Funções de emulação
 // Limpa a string de comando
 void limpeza(char s[4]){
@@ -172,12 +166,6 @@ int escolha(FILE* entry, FILE* exit, regs* R, char Nome_arquivo[26], int max_lin
         int reg1, reg2, line;
         fscanf(entry, "%d %d %d", &reg1, &reg2, &line);
         ILT(entry, R, reg1, reg2, line, Nome_arquivo, max_linhas);
-        return 1;
-    }
-    if(!strcmp(command, "IGT")){
-        int reg1, reg2, line;
-        fscanf(entry, "%d %d %d", &reg1, &reg2, &line);
-        IGT(entry, R, reg1, reg2, line, Nome_arquivo, max_linhas);
         return 1;
     }
     return 0;
