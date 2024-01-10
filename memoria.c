@@ -1,18 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "CPU.h"
 
 
 #define MAX_RAM 134217728
 #define MAX_INSTRU 32 
 
-typedef struct{
-    int* RAM;
-    int Mem_Instrucao;
-    char instrucao[100];
-}Memoria;
-
-
+int tamanhoArquivo(FILE* arq){
+    char linha[99];
+    int linhas = 0;
+    while (fgets(linha, 99, arq) != NULL){
+        linhas++;
+    }
+    rewind(arq); // Volta ao início do arquivo
+    return linhas + 1;
+}
 
 int GastoMemoria(char* nome){
 
@@ -80,4 +83,5 @@ int analise_opcode(char* linha){
         return 32;
     if(strstr(linha, "ILT") != NULL)
         return 32;
+    return 0;
 }

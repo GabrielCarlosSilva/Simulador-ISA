@@ -1,8 +1,12 @@
-all: main.o isa.o
-	@gcc main.o isa.o -o exe
-main.o: main.c
-	@gcc main.c -c -Wall
-isa.o: isa.c
-	@gcc isa.c -c -Wall
+all: Unit_Control.o CPU.o ALU.o memoria.o 
+	@gcc Unit_Control.o CPU.o ALU.o memoria.o -o exe -lm
+CPU.o: CPU.c
+	@gcc CPU.c -c -Wall
+memoria.o: memoria.c
+	@gcc memoria.c -c -Wall
+ALU.o: ALU.c
+	@gcc ALU.c -c -Wall
+Unit_Control.o: Unit_Control.c
+	@gcc Unit_Control.c -c -Wall
 run:
 	@./exe
