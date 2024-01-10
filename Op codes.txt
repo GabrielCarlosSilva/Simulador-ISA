@@ -41,6 +41,3 @@ Verifica se a os dois registradores possuem o mesmo valor, caso positivo, pula p
 
 11- ILT reg1 reg2 line (reg1 < reg2 ? HOP line)
 Verifica se reg1 é menor que reg2, caso positivo, pula para a linha recebida.
-
-12- IGT reg1 reg2 line (reg1 > reg2 ? HOP line)
-Verifica se reg1 é maior que reg2, caso positivo, pula para a linha recebida.
