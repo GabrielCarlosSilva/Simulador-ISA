@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct{
-    float info;
+    double info;
 }regs;
 
 //// Funções administrativas
@@ -32,7 +32,7 @@ int HOP(FILE* entry, int line, char Nome_arquivo[26], int max_linhas){
 int MEM(regs* R, FILE* exit, int reg){
     if(reg > 15 || reg <= 1)
         return 0;
-    fprintf(exit, "%f \n", R[reg].info);
+    fprintf(exit, "%lf \n", R[reg].info);
     return 1;
 }
 
