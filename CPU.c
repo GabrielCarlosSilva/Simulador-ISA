@@ -24,6 +24,7 @@ int main(){
             return 0;
         cpu.Contador_Programa = escolha(cpu.R, cpu.Contador_Programa,result);
         cpu.Contador_Programa++;
+
         
     }
 

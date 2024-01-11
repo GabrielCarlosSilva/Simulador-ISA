@@ -50,12 +50,15 @@ void EXP(regs* , int, int, int);
 int IET(regs*, int, int, int, int);
 int ILT(regs*, int, int, int, int);
 
+void CPY(regs*, int, int);
+
 int GastoMemoria(char*);
 int EnviaInstrucao(int, char*);
 int analise_opcode(char* );
 
 int escolha(regs*, int, FILE*);
 
+int EnderecoToInt(char[4]);
 void limpeza(char[4]);
 int tamanhoArquivo(FILE*);
 

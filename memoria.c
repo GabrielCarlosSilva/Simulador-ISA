@@ -83,5 +83,7 @@ int analise_opcode(char* linha){
         return 32;
     if(strstr(linha, "ILT") != NULL)
         return 32;
+    if(strstr(linha, "CPY") != NULL)
+        return 12;
     return 0;
 }

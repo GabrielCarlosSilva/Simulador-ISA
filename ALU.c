@@ -76,3 +76,7 @@ int ILT(regs* R, int r1, int r2, int line, int PC){
         return PC;
     }
 }
+
+void CPY(regs* R, int r1, int r2){
+    R[r1].info = R[r2].info;
+}
