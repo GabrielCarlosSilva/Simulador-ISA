@@ -17,9 +17,10 @@ int tamanhoArquivo(FILE* arq){
     return linhas + 1;
 }
 
-int GastoMemoria(char* nome){
+int GastoMemoria(char* nome, int *GastoM){
 
     Memoria mem;
+    mem.RAM=*GastoM;
     mem.Mem_Instrucao=0;
     FILE* entry = fopen(nome, "r");
     int max_linhas = tamanhoArquivo(entry);
@@ -30,12 +31,13 @@ int GastoMemoria(char* nome){
         if(mem.Mem_Instrucao<=MAX_INSTRU){
             mem.RAM=mem.RAM+mem.Mem_Instrucao;
         }
-        if(mem.RAM>MAX_RAM || mem.Mem_Instrucao>MAX_INSTRU){
+        if(mem.RAM>MAX_RAM){
             printf("Memória Principal Sobrecarregada. Abortar Execução!\n");
             fclose(entry);
             return 0;
         }       
     }
+    *GastoM=mem.RAM;
     fclose(entry);
 
     return 1;

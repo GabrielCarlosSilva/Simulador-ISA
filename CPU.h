@@ -43,7 +43,7 @@ int ILT(regs*, int, int, int, int);
 
 void CPY(regs*, int, int);
 
-int GastoMemoria(char*);
+int GastoMemoria(char*, int*);
 int EnviaInstrucao(int, char*);
 int analise_opcode(char* );
 
