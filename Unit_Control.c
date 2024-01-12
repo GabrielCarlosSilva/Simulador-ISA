@@ -40,12 +40,19 @@ int escolha(regs* R, int PC, FILE* exit){
         fclose(entry);
         return HOP(line) -1;
     }
-    if(!strcmp(command, "MEM")){
+    if(!strcmp(command, "MEMF")){
         int reg;
         fscanf(entry, "%s", regc);
         reg=EnderecoToInt(regc);
         fclose(entry);
-        MEM(R, exit, reg);
+        MEMF(R, exit, reg);
+    }
+    if(!strcmp(command, "MEMD")){
+        int reg;
+        fscanf(entry, "%s", regc);
+        reg=EnderecoToInt(regc);
+        fclose(entry);
+        MEMD(R, exit, reg);
     }
     if(!strcmp(command, "SUM")){
         int reg[3];

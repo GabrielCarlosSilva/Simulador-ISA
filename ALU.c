@@ -20,12 +20,20 @@ int HOP(int line){
 }
 
 //  Guarda a informação do registrador na memoria (MEMORY)
-int MEM(regs* R, FILE* exit, int reg){
+int MEMF(regs* R, FILE* exit, int reg){
     if(reg > 15 || reg <= 1)
         return 0;
     fprintf(exit, "%lf \n", R[reg].info);
     return 1;
 }
+
+int MEMD(regs* R, FILE* exit, int reg){
+    if(reg > 15 || reg <= 1)
+        return 0;
+    fprintf(exit, "%.0lf \n", R[reg].info);
+    return 1;
+}
+
 
 //// Funções matemáticas
 // Soma simples, resultado em r3 (r1 + r2 = r3)

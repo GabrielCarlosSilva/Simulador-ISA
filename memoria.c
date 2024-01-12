@@ -65,7 +65,9 @@ int analise_opcode(char* linha){
         return 32;
     if(strstr(linha, "HOP") != NULL)
         return 32;
-    if(strstr(linha, "MEM") != NULL)
+    if(strstr(linha, "MEMF") != NULL)
+        return 8;
+    if(strstr(linha, "MEMD") != NULL)
         return 8;
     if(strstr(linha, "SUM") != NULL)
         return 16;

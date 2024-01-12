@@ -8,7 +8,7 @@
 
 
 typedef struct REGS regs;
-typedef struct CONTROL CoUn;
+
 
 typedef struct{
     int RAM;
@@ -16,29 +16,20 @@ typedef struct{
     char instrucao[100];
 }Memoria;
 
-struct CONTROL{
-    char opCode[4];
-    int reg1;
-    int reg2;
-    int reg3;
-    double info;
-    int line;
-};
-
 struct REGS{
     double info;
 };
 
 typedef struct{
     regs R[16];
-    CoUn controle;
     int Contador_Programa;
 }CPU;
 
 
 int SET(regs*, int, float);
 int HOP(int);
-int MEM(regs*, FILE*, int);
+int MEMF(regs*, FILE*, int);
+int MEMD(regs*, FILE*, int);
 
 void SUM(regs* , int, int, int);
 void SUB(regs* , int, int, int);

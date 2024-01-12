@@ -7,7 +7,7 @@ int main(){
     char Nome_arquivo[26];
     cpu.R[0].info=0.0;
     cpu.R[1].info=1.0;
-
+    
     int saida = 1;
 
     printf("Nome do arquivo de entrada: ");
