@@ -18,8 +18,10 @@ int main() {
         printf("Nome do arquivo de entrada: ");
         scanf("%s", Nome_arquivo);
 
-        if(!strcmp(Nome_arquivo, SAIR_STRING))
+        if(!strcmp(Nome_arquivo, SAIR_STRING)){
+            printf("Finalizando...\n");
             return 0;
+        }
         if (!GastoMemoria(Nome_arquivo, &GastoM))
             return 0;
 
